@@ -5,687 +5,816 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Wanderlust Tours — Explore India With Us</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior:smooth; }
+
 :root {
-  --blue:#0077b6; --deep:#03045e; --sky:#00b4d8;
-  --orange:#f77f00; --green:#25D366; --sand:#fdf8f0;
-  --dark:#0d1117; --grey:#64748b; --light:#f0f6ff;
-  --white:#fff; --shadow:0 8px 30px rgba(0,119,182,0.13);
+  --blue: #0077b6;
+  --deep: #03045e;
+  --sky:  #00b4d8;
+  --orange: #f77f00;
+  --wa:   #25D366;
+  --sand: #fdf8f0;
+  --dark: #0d1117;
+  --grey: #64748b;
+  --light: #f0f6ff;
+  --white: #ffffff;
+  --shadow: 0 8px 32px rgba(0,119,182,0.13);
 }
-body { font-family:'Poppins',sans-serif; background:#f8fafc; color:var(--dark); overflow-x:hidden; }
 
-/* ══ LOADER ══ */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f8fafc;
+  color: var(--dark);
+  overflow-x: hidden;
+}
+
+/* ════════════════════════════
+   LOADER
+════════════════════════════ */
 #loader {
-  position:fixed; inset:0; background:var(--deep); z-index:9999;
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem;
-  transition:opacity 0.5s ease;
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--deep);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1.2rem;
+  transition: opacity 0.6s ease;
 }
-#loader h2 { font-family:'Playfair Display',serif; color:white; font-size:2rem; letter-spacing:2px; }
-#loader p { color:rgba(255,255,255,0.5); font-size:0.85rem; letter-spacing:3px; text-transform:uppercase; }
-.loader-bar { width:200px; height:3px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; }
-.loader-fill { height:100%; background:var(--orange); border-radius:10px; animation:loadfill 1.8s ease forwards; }
-@keyframes loadfill { from{width:0} to{width:100%} }
+#loader .l-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem; font-weight: 900; color: white; letter-spacing: 2px;
+}
+#loader .l-logo span { color: var(--orange); }
+#loader p { color: rgba(255,255,255,0.45); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; }
+.l-bar { width: 220px; height: 3px; background: rgba(255,255,255,0.12); border-radius: 10px; overflow: hidden; }
+.l-fill { height: 100%; background: var(--orange); border-radius: 10px; animation: lfill 2s ease forwards; }
+@keyframes lfill { from { width:0 } to { width:100% } }
 
-/* ══ HEADER ══ */
+/* ════════════════════════════
+   HEADER
+════════════════════════════ */
 header {
-  position:fixed; top:0; left:0; right:0; z-index:1000;
-  background:rgba(255,255,255,0.95); backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(0,119,182,0.1);
-  padding:0 1.5rem; height:64px;
-  display:flex; align-items:center; justify-content:space-between;
+  position: fixed; top:0; left:0; right:0; z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0,119,182,0.08);
+  height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 1.4rem;
 }
-.logo { font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:900; color:var(--deep); }
-.logo span { color:var(--orange); }
-.nav { display:flex; gap:1.5rem; list-style:none; }
-.nav a { font-size:0.82rem; font-weight:500; text-decoration:none; color:var(--dark); transition:color 0.2s; }
-.nav a:hover { color:var(--blue); }
-.nav-btns { display:flex; gap:0.6rem; align-items:center; }
-.btn-wa-sm {
-  background:var(--green); color:white; padding:0.45rem 1rem; border-radius:50px;
-  font-size:0.78rem; font-weight:700; text-decoration:none; white-space:nowrap;
-  box-shadow:0 3px 12px rgba(37,211,102,0.3); transition:transform 0.2s;
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 900; color: var(--deep);
 }
-.btn-wa-sm:hover { transform:translateY(-1px); }
-.hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; }
-.hamburger span { width:22px; height:2px; background:var(--dark); border-radius:2px; display:block; }
-.mob-nav {
-  display:none; flex-direction:column;
-  position:fixed; top:64px; left:0; right:0; z-index:999;
-  background:white; border-bottom:1px solid #eee; padding:1.2rem 1.5rem; gap:1rem;
+.logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 1.4rem; list-style: none; }
+.nav-links a { font-size: 0.8rem; font-weight: 500; text-decoration: none; color: var(--dark); transition: color 0.2s; }
+.nav-links a:hover { color: var(--blue); }
+.h-right { display: flex; align-items: center; gap: 0.6rem; }
+.h-wa {
+  background: var(--wa); color: white;
+  padding: 0.48rem 1.1rem; border-radius: 50px;
+  font-size: 0.78rem; font-weight: 700; text-decoration: none;
+  white-space: nowrap; box-shadow: 0 3px 12px rgba(37,211,102,0.3);
+  transition: transform 0.2s;
 }
-.mob-nav.open { display:flex; }
-.mob-nav a { font-size:1rem; font-weight:500; text-decoration:none; color:var(--dark); padding:0.3rem 0; }
+.h-wa:hover { transform: translateY(-1px); }
+.hbg { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+.hbg span { display: block; width: 22px; height: 2px; background: var(--dark); border-radius: 2px; }
+.mob-menu {
+  display: none; flex-direction: column; gap: 1rem;
+  position: fixed; top: 64px; left: 0; right: 0; z-index: 999;
+  background: white; padding: 1.2rem 1.4rem; border-bottom: 1px solid #eee;
+}
+.mob-menu.open { display: flex; }
+.mob-menu a { font-size: 1rem; font-weight: 500; color: var(--dark); text-decoration: none; }
 
-/* ══ HERO ══ */
-#hero {
-  min-height:100svh; position:relative; overflow:hidden;
-  display:flex; align-items:center; justify-content:center; text-align:center;
-  padding:5rem 1.5rem 3rem;
+/* ════════════════════════════
+   HERO
+════════════════════════════ */
+#home {
+  min-height: 100svh; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 5rem 1.4rem 3rem;
 }
 .hero-bg {
-  position:absolute; inset:0;
-  background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80') center/cover no-repeat;
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80') center/cover no-repeat;
 }
 .hero-bg::after {
-  content:''; position:absolute; inset:0;
-  background:linear-gradient(170deg,rgba(3,4,94,0.82) 0%,rgba(0,119,182,0.65) 55%,rgba(0,180,216,0.45) 100%);
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(165deg, rgba(3,4,94,0.83) 0%, rgba(0,119,182,0.62) 55%, rgba(0,180,216,0.42) 100%);
 }
-.hero-inner { position:relative; z-index:2; }
-.hero-badge {
-  display:inline-block; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25);
-  color:white; padding:0.35rem 1.1rem; border-radius:50px;
-  font-size:0.72rem; font-weight:600; letter-spacing:2.5px; text-transform:uppercase;
-  margin-bottom:1.5rem; animation:up 0.7s ease both;
+.hero-inner { position: relative; z-index: 2; }
+.hero-chip {
+  display: inline-block;
+  background: rgba(255,255,255,0.13); border: 1px solid rgba(255,255,255,0.25);
+  color: white; padding: 0.35rem 1.1rem; border-radius: 50px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 1.4rem; animation: up 0.7s ease both;
 }
 .hero-title {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(3rem,13vw,6.5rem); font-weight:900; color:white; line-height:1;
-  margin-bottom:0.5rem; animation:up 0.7s 0.1s ease both;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 13vw, 6.5rem);
+  font-weight: 900; color: white; line-height: 1;
+  margin-bottom: 0.4rem; animation: up 0.7s 0.1s ease both;
 }
-.hero-title em { font-style:italic; color:#90e0ef; }
-.hero-tagline {
-  font-size:clamp(1rem,3vw,1.25rem); color:rgba(255,255,255,0.8); font-weight:300;
-  max-width:500px; margin:1rem auto 2.5rem; line-height:1.7;
-  animation:up 0.7s 0.2s ease both;
+.hero-title em { font-style: italic; color: #90e0ef; }
+.hero-sub {
+  font-size: clamp(0.95rem, 2.8vw, 1.18rem);
+  color: rgba(255,255,255,0.78); font-weight: 300;
+  max-width: 480px; margin: 1rem auto 2.2rem; line-height: 1.7;
+  animation: up 0.7s 0.2s ease both;
 }
-.hero-btns { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; animation:up 0.7s 0.3s ease both; }
-.btn-main {
-  background:var(--orange); color:white; padding:0.9rem 2.2rem; border-radius:50px;
-  text-decoration:none; font-size:1rem; font-weight:700;
-  box-shadow:0 6px 28px rgba(247,127,0,0.45); transition:transform 0.2s, box-shadow 0.2s;
+.hero-btns {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  animation: up 0.7s 0.3s ease both;
 }
-.btn-main:hover { transform:translateY(-3px); box-shadow:0 12px 36px rgba(247,127,0,0.55); }
-.btn-outline-white {
-  background:transparent; color:white; border:2px solid rgba(255,255,255,0.4);
-  padding:0.9rem 2.2rem; border-radius:50px; text-decoration:none;
-  font-size:1rem; font-weight:500; transition:background 0.2s;
+.btn-orange {
+  background: var(--orange); color: white;
+  padding: 0.9rem 2.2rem; border-radius: 50px; text-decoration: none;
+  font-size: 0.97rem; font-weight: 700;
+  box-shadow: 0 6px 26px rgba(247,127,0,0.42);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.btn-outline-white:hover { background:rgba(255,255,255,0.12); }
+.btn-orange:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(247,127,0,0.55); }
+.btn-ghost {
+  background: transparent; color: white;
+  border: 2px solid rgba(255,255,255,0.4);
+  padding: 0.9rem 2.2rem; border-radius: 50px; text-decoration: none;
+  font-size: 0.97rem; font-weight: 500; transition: background 0.2s;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.12); }
 .hero-stats {
-  display:flex; gap:2.5rem; justify-content:center; flex-wrap:wrap;
-  margin-top:4rem; position:relative; z-index:2;
-  animation:up 0.7s 0.4s ease both;
+  display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+  margin-top: 3.5rem; position: relative; z-index: 2;
+  animation: up 0.7s 0.4s ease both;
 }
-.stat { text-align:center; color:white; }
-.stat-num { font-family:'Playfair Display',serif; font-size:2.4rem; font-weight:900; line-height:1; }
-.stat-lbl { font-size:0.7rem; opacity:0.6; letter-spacing:2px; text-transform:uppercase; margin-top:3px; }
+.stat { text-align: center; color: white; }
+.stat-n { font-family: 'Playfair Display', serif; font-size: 2.4rem; font-weight: 900; line-height: 1; }
+.stat-l { font-size: 0.68rem; opacity: 0.58; letter-spacing: 2px; text-transform: uppercase; margin-top: 3px; }
 .hero-scroll {
-  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
-  color:rgba(255,255,255,0.5); font-size:0.68rem; letter-spacing:2.5px; text-transform:uppercase;
-  animation:bounce 2s ease-in-out infinite; z-index:2;
+  position: absolute; bottom: 1.8rem; left: 50%; transform: translateX(-50%);
+  color: rgba(255,255,255,0.45); font-size: 0.68rem; letter-spacing: 2.5px;
+  text-transform: uppercase; z-index: 2; text-align: center;
+  animation: bob 2s ease-in-out infinite;
 }
-.hero-scroll::after { content:' ↓'; }
+.hero-scroll::after { content: ' ↓'; }
 
-/* ══ WHY US ══ */
-#why { background:white; padding:5rem 1.5rem; }
-.why-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; margin-top:2.5rem; }
+/* ════════════════════════════
+   MARQUEE STRIP
+════════════════════════════ */
+.marquee-wrap { background: var(--deep); padding: 1.2rem 0; overflow: hidden; }
+.marquee-track {
+  display: flex; gap: 1.5rem; white-space: nowrap;
+  animation: mscroll 20s linear infinite;
+}
+.marquee-track span { font-size: 0.8rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 0 0.5rem; }
+.marquee-track .hi { color: #90e0ef; }
+.marquee-track .dot { color: rgba(255,255,255,0.25); }
+@keyframes mscroll { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+
+/* ════════════════════════════
+   SHARED SECTION
+════════════════════════════ */
+.sec { padding: 5rem 1.4rem; }
+.sec-sand { background: var(--sand); }
+.sec-dark { background: var(--dark); color: white; }
+.sec-blue { background: linear-gradient(135deg, var(--deep), var(--blue)); color: white; }
+.sl { font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
+.sec-dark .sl, .sec-blue .sl { color: var(--sky); }
+.st { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 900; line-height: 1.15; margin-bottom: 0.7rem; }
+.sec-dark .st { color: white; }
+.sec-blue .st { color: white; }
+.sd { color: var(--grey); font-size: 0.93rem; max-width: 480px; line-height: 1.7; }
+.sec-dark .sd, .sec-blue .sd { color: rgba(255,255,255,0.6); }
+.sh { margin-bottom: 2.8rem; }
+
+/* ════════════════════════════
+   WHY US
+════════════════════════════ */
+.why-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem;
+  margin-top: 2.5rem;
+}
 .why-card {
-  background:var(--light); border-radius:18px; padding:1.5rem;
-  border:1px solid rgba(0,119,182,0.08); text-align:center;
-  transition:transform 0.3s, box-shadow 0.3s;
+  background: var(--light); border-radius: 18px; padding: 1.5rem;
+  text-align: center; border: 1px solid rgba(0,119,182,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.why-card:hover { transform:translateY(-4px); box-shadow:var(--shadow); }
-.why-icon { font-size:2.2rem; margin-bottom:0.7rem; }
-.why-card h3 { font-size:0.95rem; font-weight:700; margin-bottom:0.3rem; color:var(--deep); }
-.why-card p { font-size:0.78rem; color:var(--grey); line-height:1.5; }
+.why-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.why-icon { font-size: 2rem; margin-bottom: 0.6rem; }
+.why-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--deep); margin-bottom: 0.3rem; }
+.why-card p { font-size: 0.76rem; color: var(--grey); line-height: 1.5; }
 
-/* ══ SHARED ══ */
-.sec { padding:5rem 1.5rem; }
-.sec-alt { background:var(--sand); }
-.sec-lbl { font-size:0.7rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--blue); margin-bottom:0.5rem; }
-.sec-title { font-family:'Playfair Display',serif; font-size:clamp(1.9rem,5vw,2.8rem); font-weight:900; line-height:1.15; margin-bottom:0.7rem; }
-.sec-sub { color:var(--grey); font-size:0.95rem; max-width:480px; line-height:1.7; }
-.sec-head { margin-bottom:2.8rem; }
+/* ════════════════════════════
+   COUNTER
+════════════════════════════ */
+.counter-strip {
+  background: linear-gradient(135deg, var(--deep), var(--blue));
+  padding: 3rem 1.4rem;
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; text-align: center;
+}
+.cnt { color: white; }
+.cnt-n { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; color: #90e0ef; }
+.cnt-l { font-size: 0.7rem; opacity: 0.6; letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
 
-/* ══ PACKAGES ══ */
-.pkg-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; }
-.pkg-card {
-  background:white; border-radius:20px; overflow:hidden;
-  box-shadow:var(--shadow); border:1px solid rgba(0,119,182,0.06);
-  opacity:0; transform:translateY(24px);
-  transition:transform 0.3s, box-shadow 0.3s;
+/* ════════════════════════════
+   PACKAGES
+════════════════════════════ */
+.pkg-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+.card {
+  background: white; border-radius: 20px; overflow: hidden;
+  box-shadow: var(--shadow); border: 1px solid rgba(0,119,182,0.06);
+  opacity: 0; transform: translateY(28px);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
-.pkg-card.show { opacity:1; transform:translateY(0); transition:opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s; }
-.pkg-card:hover { transform:translateY(-6px); box-shadow:0 20px 56px rgba(0,119,182,0.18); }
-.pkg-img { position:relative; height:200px; overflow:hidden; }
-.pkg-img img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s; }
-.pkg-card:hover .pkg-img img { transform:scale(1.08); }
-.pkg-badge {
-  position:absolute; top:1rem; left:1rem;
-  padding:0.28rem 0.85rem; border-radius:50px;
-  font-size:0.68rem; font-weight:800; color:white; letter-spacing:0.5px;
+.card.show { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s; }
+.card:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(0,119,182,0.18); }
+.card-img { position: relative; height: 195px; overflow: hidden; }
+.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+.card:hover .card-img img { transform: scale(1.08); }
+.card-badge {
+  position: absolute; top: 0.9rem; left: 0.9rem;
+  padding: 0.25rem 0.85rem; border-radius: 50px;
+  font-size: 0.68rem; font-weight: 800; color: white;
 }
-.pkg-fav {
-  position:absolute; top:1rem; right:1rem;
-  width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,0.9);
-  display:flex; align-items:center; justify-content:center; font-size:0.9rem; cursor:pointer;
-  transition:transform 0.2s;
+.card-fav {
+  position: absolute; top: 0.9rem; right: 0.9rem;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; cursor: pointer; transition: transform 0.2s;
 }
-.pkg-fav:hover { transform:scale(1.2); }
-.pkg-body { padding:1.4rem; }
-.pkg-name { font-family:'Playfair Display',serif; font-size:1.35rem; font-weight:700; margin-bottom:0.5rem; }
-.pkg-loc { font-size:0.78rem; color:var(--grey); margin-bottom:0.8rem; display:flex; align-items:center; gap:0.3rem; }
-.pkg-includes { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1rem; }
-.inc { background:var(--light); color:var(--blue); padding:0.2rem 0.65rem; border-radius:50px; font-size:0.7rem; font-weight:600; }
-.pkg-footer { display:flex; align-items:center; justify-content:space-between; padding-top:1rem; border-top:1px solid #f0f0f0; }
-.pkg-price { font-family:'Playfair Display',serif; font-size:1.7rem; font-weight:900; color:var(--blue); }
-.pkg-price small { font-family:'Poppins',sans-serif; font-size:0.72rem; font-weight:400; color:var(--grey); }
-.pkg-dur { font-size:0.75rem; color:var(--grey); background:#f8f8f8; padding:0.3rem 0.7rem; border-radius:50px; }
-.book-now {
-  display:flex; align-items:center; gap:0.5rem;
-  background:var(--green); color:white; width:100%;
-  padding:0.85rem; border-radius:50px; border:none;
-  font-family:'Poppins',sans-serif; font-size:0.92rem; font-weight:700;
-  cursor:pointer; margin-top:1rem; text-decoration:none; justify-content:center;
-  box-shadow:0 4px 18px rgba(37,211,102,0.3);
-  transition:transform 0.18s, box-shadow 0.18s;
+.card-fav:hover { transform: scale(1.2); }
+.card-body { padding: 1.4rem; }
+.card-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.3rem; }
+.card-loc { font-size: 0.76rem; color: var(--grey); margin-bottom: 0.8rem; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+.ctag { background: var(--light); color: var(--blue); padding: 0.2rem 0.65rem; border-radius: 50px; font-size: 0.68rem; font-weight: 600; }
+.card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.9rem; border-top: 1px solid #f0f0f0; margin-bottom: 1rem; }
+.card-price { font-family: 'Playfair Display', serif; font-size: 1.65rem; font-weight: 900; color: var(--blue); }
+.card-price small { font-family: 'Poppins', sans-serif; font-size: 0.7rem; font-weight: 400; color: var(--grey); }
+.card-dur { font-size: 0.73rem; color: var(--grey); background: #f4f4f4; padding: 0.3rem 0.75rem; border-radius: 50px; }
+.book-btn {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  background: var(--wa); color: white; width: 100%;
+  padding: 0.85rem; border-radius: 50px; border: none;
+  font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 700;
+  cursor: pointer; text-decoration: none;
+  box-shadow: 0 4px 18px rgba(37,211,102,0.28);
+  transition: transform 0.18s, box-shadow 0.18s;
 }
-.book-now:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(37,211,102,0.45); }
+.book-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.45); }
 
-/* ══ COUNTER STRIP ══ */
-#counter {
-  background:linear-gradient(135deg,var(--deep) 0%,var(--blue) 100%);
-  padding:3rem 1.5rem;
-  display:grid; grid-template-columns:repeat(2,1fr); gap:2rem; text-align:center;
+/* ════════════════════════════
+   GALLERY
+════════════════════════════ */
+.gtabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.8rem; }
+.gtab {
+  padding: 0.45rem 1.1rem; border-radius: 50px;
+  border: 2px solid var(--blue); background: transparent;
+  color: var(--blue); font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; font-family: 'Poppins', sans-serif; transition: all 0.2s;
 }
-.counter-item { color:white; }
-.counter-num { font-family:'Playfair Display',serif; font-size:2.5rem; font-weight:900; color:#90e0ef; }
-.counter-lbl { font-size:0.75rem; opacity:0.65; letter-spacing:1.5px; text-transform:uppercase; margin-top:4px; }
+.gtab.on, .gtab:hover { background: var(--blue); color: white; }
+.ggrid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+.gitem { position: relative; overflow: hidden; border-radius: 14px; cursor: pointer; aspect-ratio: 1/1; }
+.gitem.big { grid-column: span 2; aspect-ratio: 16/8; }
+.gitem img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s; }
+.gitem:hover img { transform: scale(1.07); }
+.gcap {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(3,4,94,0.78) 0%, transparent 55%);
+  opacity: 0; transition: opacity 0.3s;
+  display: flex; align-items: flex-end; padding: 0.9rem;
+}
+.gitem:hover .gcap { opacity: 1; }
+.gcap span { color: white; font-weight: 600; font-size: 0.85rem; }
 
-/* ══ GALLERY ══ */
-.g-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.8rem; }
-.g-tab {
-  padding:0.45rem 1.1rem; border-radius:50px; border:2px solid var(--blue);
-  background:transparent; color:var(--blue); font-size:0.8rem; font-weight:600;
-  cursor:pointer; font-family:'Poppins',sans-serif; transition:all 0.2s;
+/* ════════════════════════════
+   REVIEWS
+════════════════════════════ */
+.rev-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+.rev-card {
+  background: var(--light); border-radius: 18px; padding: 1.5rem;
+  border-left: 4px solid var(--blue); position: relative;
 }
-.g-tab.on,.g-tab:hover { background:var(--blue); color:white; }
-.g-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:0.8rem; }
-.g-item { position:relative; overflow:hidden; border-radius:14px; cursor:pointer; aspect-ratio:1/1; }
-.g-item.big { grid-column:span 2; aspect-ratio:16/8; }
-.g-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.4s; }
-.g-item:hover img { transform:scale(1.07); }
-.g-cap {
-  position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(3,4,94,0.75) 0%,transparent 55%);
-  opacity:0; transition:opacity 0.3s;
-  display:flex; align-items:flex-end; padding:1rem;
+.rev-card::before {
+  content: '"'; font-size: 5rem; line-height: 0;
+  color: var(--blue); opacity: 0.07; position: absolute;
+  top: 1.8rem; left: 1rem; font-family: 'Playfair Display', serif;
 }
-.g-item:hover .g-cap { opacity:1; }
-.g-cap span { color:white; font-weight:600; font-size:0.88rem; }
+.rev-stars { color: #fbbf24; font-size: 0.95rem; margin-bottom: 0.55rem; }
+.rev-text { font-size: 0.87rem; color: var(--dark); line-height: 1.7; font-style: italic; margin-bottom: 1rem; }
+.rev-author { display: flex; align-items: center; gap: 0.75rem; }
+.rev-av {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: 1rem; flex-shrink: 0;
+}
+.rev-name { font-size: 0.87rem; font-weight: 700; }
+.rev-trip { font-size: 0.72rem; color: var(--grey); }
 
-/* ══ TESTIMONIALS ══ */
-#testimonials { background:white; }
-.testi-grid { display:grid; grid-template-columns:1fr; gap:1.2rem; }
-.testi-card {
-  background:var(--light); border-radius:18px; padding:1.5rem;
-  border-left:4px solid var(--blue); position:relative;
-}
-.testi-card::before { content:'"'; font-size:5rem; line-height:0; color:var(--blue); opacity:0.08; position:absolute; top:1.8rem; left:1rem; font-family:'Playfair Display',serif; }
-.t-stars { color:#fbbf24; font-size:0.95rem; margin-bottom:0.6rem; }
-.t-text { font-size:0.88rem; color:var(--dark); line-height:1.7; font-style:italic; margin-bottom:1rem; }
-.t-author { display:flex; align-items:center; gap:0.8rem; }
-.t-av { width:42px; height:42px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--sky)); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; font-size:1rem; flex-shrink:0; }
-.t-name { font-size:0.88rem; font-weight:700; }
-.t-trip { font-size:0.72rem; color:var(--grey); }
-
-/* ══ HOW IT WORKS ══ */
-#how { background:linear-gradient(135deg,var(--deep),var(--blue)); color:white; }
-#how .sec-title { color:white; }
-#how .sec-sub { color:rgba(255,255,255,0.65); }
-.how-grid { display:grid; grid-template-columns:1fr; gap:1.2rem; margin:2.5rem 0; }
+/* ════════════════════════════
+   HOW IT WORKS
+════════════════════════════ */
+.how-grid { display: grid; grid-template-columns: 1fr; gap: 1.1rem; margin: 2.2rem 0; }
 .how-card {
-  background:rgba(255,255,255,0.09); border:1px solid rgba(255,255,255,0.15);
-  border-radius:18px; padding:1.5rem; display:flex; gap:1rem; align-items:flex-start;
-  backdrop-filter:blur(8px);
+  background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 18px; padding: 1.4rem;
+  display: flex; align-items: flex-start; gap: 1rem;
+  backdrop-filter: blur(8px);
 }
-.how-num { min-width:40px; height:40px; border-radius:50%; background:var(--orange); color:white; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; }
-.how-card h3 { font-size:1rem; font-weight:700; margin-bottom:0.25rem; }
-.how-card p { font-size:0.82rem; opacity:0.7; line-height:1.55; }
-.wa-cta {
-  display:inline-flex; align-items:center; gap:0.7rem;
-  background:var(--green); color:white; padding:1.1rem 2.6rem; border-radius:50px;
-  text-decoration:none; font-size:1.05rem; font-weight:700;
-  box-shadow:0 8px 32px rgba(37,211,102,0.4); transition:transform 0.2s, box-shadow 0.2s;
+.how-num {
+  min-width: 40px; height: 40px; border-radius: 50%;
+  background: var(--orange); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 1rem;
 }
-.wa-cta:hover { transform:translateY(-3px); box-shadow:0 14px 42px rgba(37,211,102,0.55); }
-
-/* ══ FEEDBACK FORM ══ */
-#feedback { background:var(--sand); }
-.fb-box { background:white; border-radius:22px; padding:2rem; box-shadow:var(--shadow); max-width:560px; }
-.fb-box h3 { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:900; margin-bottom:1.5rem; }
-.fg { margin-bottom:1rem; }
-.fg label { font-size:0.75rem; font-weight:700; color:var(--grey); display:block; margin-bottom:0.4rem; text-transform:uppercase; letter-spacing:0.5px; }
-.fg input,.fg textarea,.fg select {
-  width:100%; padding:0.8rem 1rem; border:2px solid #e8edf2; border-radius:12px;
-  font-family:'Poppins',sans-serif; font-size:0.88rem; outline:none; resize:none;
-  transition:border-color 0.2s; background:white;
+.how-card h3 { font-size: 0.98rem; font-weight: 700; margin-bottom: 0.22rem; }
+.how-card p { font-size: 0.8rem; opacity: 0.68; line-height: 1.55; }
+.wa-big {
+  display: inline-flex; align-items: center; gap: 0.7rem;
+  background: var(--wa); color: white;
+  padding: 1.05rem 2.6rem; border-radius: 50px; text-decoration: none;
+  font-size: 1.05rem; font-weight: 700;
+  box-shadow: 0 8px 32px rgba(37,211,102,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.fg input:focus,.fg textarea:focus,.fg select:focus { border-color:var(--blue); }
-.star-pick { display:flex; flex-direction:row-reverse; justify-content:flex-end; gap:0.25rem; }
-.star-pick input { display:none; }
-.star-pick label { font-size:2.2rem; cursor:pointer; color:#d1d5db; transition:color 0.1s; }
-.star-pick input:checked ~ label,.star-pick label:hover,.star-pick label:hover ~ label { color:#fbbf24; }
-.fb-btn { width:100%; background:var(--blue); color:white; border:none; padding:0.95rem; border-radius:50px; font-family:'Poppins',sans-serif; font-size:0.97rem; font-weight:700; cursor:pointer; margin-top:0.5rem; transition:background 0.2s, transform 0.15s; }
-.fb-btn:hover { background:var(--deep); transform:translateY(-1px); }
-.fb-ok { display:none; text-align:center; color:var(--blue); font-weight:700; margin-top:1rem; font-size:1rem; padding:1rem; background:var(--light); border-radius:12px; }
+.wa-big:hover { transform: translateY(-3px); box-shadow: 0 14px 44px rgba(37,211,102,0.55); }
 
-/* ══ DESTINATIONS MARQUEE ══ */
-#marquee-sec { background:var(--deep); padding:1.5rem 0; overflow:hidden; }
-.marquee-track { display:flex; gap:2rem; animation:scroll 18s linear infinite; white-space:nowrap; }
-.marquee-track span { color:rgba(255,255,255,0.55); font-size:0.82rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; padding:0 1rem; }
-.marquee-track span.hi { color:#90e0ef; }
-@keyframes scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+/* ════════════════════════════
+   FEEDBACK FORM
+════════════════════════════ */
+.fb-wrap { background: white; border-radius: 22px; padding: 2rem; box-shadow: var(--shadow); max-width: 560px; }
+.fb-title { font-family: 'Playfair Display', serif; font-size: 1.55rem; font-weight: 900; margin-bottom: 1.5rem; }
+.fg { margin-bottom: 1rem; }
+.fg label { font-size: 0.73rem; font-weight: 700; color: var(--grey); display: block; margin-bottom: 0.38rem; text-transform: uppercase; letter-spacing: 0.5px; }
+.fg input, .fg textarea, .fg select {
+  width: 100%; padding: 0.8rem 1rem;
+  border: 2px solid #e8edf2; border-radius: 12px;
+  font-family: 'Poppins', sans-serif; font-size: 0.87rem;
+  outline: none; resize: none; transition: border-color 0.2s; background: white;
+}
+.fg input:focus, .fg textarea:focus, .fg select:focus { border-color: var(--blue); }
+.star-row { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 0.2rem; }
+.star-row input { display: none; }
+.star-row label { font-size: 2.1rem; cursor: pointer; color: #d1d5db; transition: color 0.1s; }
+.star-row input:checked ~ label, .star-row label:hover, .star-row label:hover ~ label { color: #fbbf24; }
+.fb-submit {
+  width: 100%; background: var(--blue); color: white;
+  border: none; padding: 0.95rem; border-radius: 50px;
+  font-family: 'Poppins', sans-serif; font-size: 0.97rem; font-weight: 700;
+  cursor: pointer; margin-top: 0.5rem; transition: background 0.2s, transform 0.15s;
+}
+.fb-submit:hover { background: var(--deep); transform: translateY(-1px); }
+.fb-done { display: none; text-align: center; background: var(--light); color: var(--blue); font-weight: 700; padding: 1rem; border-radius: 12px; margin-top: 1rem; }
 
-/* ══ CONTACT ══ */
-#contact { background:var(--dark); color:white; }
-#contact .sec-title { color:white; }
-#contact .sec-lbl { color:var(--sky); }
-.contact-cards { display:grid; grid-template-columns:1fr; gap:1rem; margin-bottom:3rem; }
+/* ════════════════════════════
+   CONTACT
+════════════════════════════ */
+.cc-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 3rem; }
 .cc {
-  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.09);
-  border-radius:16px; padding:1.2rem 1.5rem; display:flex; align-items:center; gap:1rem;
-  text-decoration:none; color:white; transition:background 0.2s, transform 0.2s;
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 16px; padding: 1.15rem 1.5rem;
+  display: flex; align-items: center; gap: 1rem;
+  text-decoration: none; color: white;
+  transition: background 0.2s, transform 0.2s;
 }
-.cc:hover { background:rgba(0,180,216,0.13); transform:translateX(5px); }
-.cc-icon { width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; font-size:1.35rem; flex-shrink:0; }
-.cc h4 { font-size:0.7rem; opacity:0.5; font-weight:400; margin-bottom:0.1rem; }
-.cc p { font-size:0.92rem; font-weight:600; }
-.footer { border-top:1px solid rgba(255,255,255,0.08); padding-top:2.5rem; text-align:center; }
-.f-logo { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:900; color:white; }
-.f-logo span { color:var(--sky); }
-.f-tag { color:rgba(255,255,255,0.35); font-size:0.85rem; margin-top:0.4rem; }
-.f-links { display:flex; gap:1.5rem; justify-content:center; margin:1.5rem 0; flex-wrap:wrap; }
-.f-links a { color:rgba(255,255,255,0.4); font-size:0.78rem; text-decoration:none; transition:color 0.2s; }
-.f-links a:hover { color:white; }
-.f-copy { color:rgba(255,255,255,0.18); font-size:0.72rem; padding-bottom:1rem; }
+.cc:hover { background: rgba(0,180,216,0.14); transform: translateX(5px); }
+.cc-icon { width: 46px; height: 46px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+.cc h4 { font-size: 0.7rem; opacity: 0.48; font-weight: 400; margin-bottom: 0.1rem; }
+.cc p { font-size: 0.9rem; font-weight: 600; }
+.ftr { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 2.5rem; text-align: center; }
+.ftr-logo { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: white; }
+.ftr-logo span { color: var(--sky); }
+.ftr-tag { color: rgba(255,255,255,0.33); font-size: 0.83rem; margin-top: 0.4rem; }
+.ftr-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0; }
+.ftr-links a { color: rgba(255,255,255,0.38); font-size: 0.77rem; text-decoration: none; transition: color 0.2s; }
+.ftr-links a:hover { color: white; }
+.ftr-copy { color: rgba(255,255,255,0.18); font-size: 0.7rem; padding-bottom: 1rem; }
 
-/* ══ FLOATING WA ══ */
+/* ════════════════════════════
+   FLOATING WA BUTTON
+════════════════════════════ */
 .float-wa {
-  position:fixed; bottom:1.5rem; right:1.5rem; z-index:997;
-  width:60px; height:60px; border-radius:50%; background:var(--green);
-  display:flex; align-items:center; justify-content:center;
-  box-shadow:0 6px 26px rgba(37,211,102,0.55);
-  text-decoration:none; animation:pulse 2.5s ease-in-out infinite;
-  transition:transform 0.2s;
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 990;
+  width: 60px; height: 60px; border-radius: 50%; background: var(--wa);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 26px rgba(37,211,102,0.55);
+  text-decoration: none; animation: wapulse 2.5s ease-in-out infinite;
 }
-.float-wa:hover { transform:scale(1.1); }
-.float-wa svg { width:28px; height:28px; fill:white; }
+.float-wa:hover { transform: scale(1.1); }
+.float-wa svg { width: 28px; height: 28px; fill: white; }
 
-/* ══ BACK TO TOP ══ */
-#btt {
-  position:fixed; bottom:1.5rem; left:1.5rem; z-index:997;
-  width:46px; height:46px; border-radius:50%; background:var(--blue);
-  color:white; border:none; cursor:pointer; font-size:1.1rem;
-  box-shadow:0 4px 16px rgba(0,119,182,0.35); opacity:0;
-  transition:opacity 0.3s, transform 0.2s;
+/* ════════════════════════════
+   BACK TO TOP
+════════════════════════════ */
+#topBtn {
+  position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 990;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--blue); color: white; border: none;
+  font-size: 1.1rem; cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0,119,182,0.35);
+  opacity: 0; transition: opacity 0.3s, transform 0.2s;
+  display: flex; align-items: center; justify-content: center;
 }
-#btt.show { opacity:1; }
-#btt:hover { transform:translateY(-2px); }
+#topBtn.show { opacity: 1; }
+#topBtn:hover { transform: translateY(-2px); }
 
-/* ══ ANIMATIONS ══ */
-@keyframes up { from{opacity:0;transform:translateY(28px);} to{opacity:1;transform:translateY(0);} }
-@keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0);} 50%{transform:translateX(-50%) translateY(8px);} }
-@keyframes pulse { 0%,100%{box-shadow:0 6px 26px rgba(37,211,102,0.55);} 50%{box-shadow:0 6px 38px rgba(37,211,102,0.9);} }
+/* ════════════════════════════
+   BOOKING POPUP
+════════════════════════════ */
+#bookingBox {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  background: rgba(3,4,94,0.7); backdrop-filter: blur(6px);
+  justify-content: center; align-items: center; padding: 1rem;
+}
+#bookingBox.open { display: flex; }
+.popup-inner {
+  background: white; border-radius: 24px; padding: 2rem;
+  width: 100%; max-width: 380px;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.popup-icon { font-size: 2.5rem; text-align: center; margin-bottom: 0.5rem; }
+.popup-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; text-align: center; color: var(--deep); margin-bottom: 0.3rem; }
+.popup-price { text-align: center; font-size: 1.5rem; font-weight: 700; color: var(--blue); font-family: 'Playfair Display', serif; margin-bottom: 1.2rem; }
+.popup-input {
+  width: 100%; padding: 0.82rem 1rem;
+  border: 2px solid #e8edf2; border-radius: 12px;
+  font-family: 'Poppins', sans-serif; font-size: 0.9rem;
+  outline: none; transition: border-color 0.2s; margin-bottom: 0.8rem;
+}
+.popup-input:focus { border-color: var(--blue); }
+.popup-wa {
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  background: var(--wa); color: white; width: 100%;
+  padding: 0.9rem; border-radius: 50px; border: none;
+  font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; box-shadow: 0 4px 18px rgba(37,211,102,0.3);
+  transition: transform 0.18s, box-shadow 0.18s; margin-bottom: 0.6rem;
+}
+.popup-wa:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.45); }
+.popup-cancel {
+  display: block; width: 100%; padding: 0.75rem;
+  background: #f1f5f9; color: var(--grey); border: none;
+  border-radius: 50px; font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: background 0.2s;
+}
+.popup-cancel:hover { background: #e2e8f0; }
+.popup-note { font-size: 0.72rem; color: var(--grey); text-align: center; margin-top: 0.6rem; }
 
-/* ══ RESPONSIVE ══ */
-@media(max-width:620px){.nav{display:none;}.hamburger{display:flex;}}
-@media(min-width:600px){.pkg-grid{grid-template-columns:repeat(2,1fr);}.testi-grid{grid-template-columns:repeat(2,1fr);}.how-grid{grid-template-columns:repeat(2,1fr);}.contact-cards{grid-template-columns:repeat(2,1fr);}.why-grid{grid-template-columns:repeat(4,1fr);}.counter-div{grid-template-columns:repeat(4,1fr);}}
-@media(min-width:960px){.pkg-grid{grid-template-columns:repeat(3,1fr);}}
+/* ════════════════════════════
+   ANIMATIONS
+════════════════════════════ */
+@keyframes up { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bob { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(8px); } }
+@keyframes wapulse { 0%,100% { box-shadow:0 6px 26px rgba(37,211,102,0.55); } 50% { box-shadow:0 6px 40px rgba(37,211,102,0.92); } }
+
+/* ════════════════════════════
+   RESPONSIVE
+════════════════════════════ */
+@media (max-width: 620px) { .nav-links { display:none; } .hbg { display:flex; } }
+@media (min-width: 600px) {
+  .pkg-grid { grid-template-columns: repeat(2, 1fr); }
+  .rev-grid { grid-template-columns: repeat(2, 1fr); }
+  .how-grid { grid-template-columns: repeat(2, 1fr); }
+  .cc-grid { grid-template-columns: repeat(2, 1fr); }
+  .why-grid { grid-template-columns: repeat(4, 1fr); }
+  .counter-strip { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 960px) { .pkg-grid { grid-template-columns: repeat(3, 1fr); } }
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
+<!-- ══ LOADER ══ -->
 <div id="loader">
-  <h2>✈️ Wanderlust Tours</h2>
+  <div class="l-logo">Wanderlust<span>.</span></div>
   <p>Loading your adventure...</p>
-  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="l-bar"><div class="l-fill"></div></div>
 </div>
 
-<!-- HEADER -->
+<!-- ══ HEADER ══ -->
 <header>
   <div class="logo">Wanderlust<span>.</span></div>
-  <ul class="nav">
-    <li><a href="#hero">Home</a></li>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
     <li><a href="#packages">Packages</a></li>
     <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#testimonials">Reviews</a></li>
+    <li><a href="#reviews">Reviews</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="nav-btns">
-    <a class="btn-wa-sm" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20plan%20a%20trip." target="_blank">💬 WhatsApp</a>
-    <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
+  <div class="h-right">
+    <a class="h-wa" href="https://wa.me/917588924408?text=Hi!" target="_blank">💬 WhatsApp</a>
+    <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
   </div>
 </header>
-<nav class="mob-nav" id="mnav">
-  <a href="#hero" onclick="closeMnav()">🏠 Home</a>
+<nav class="mob-menu" id="mnav">
+  <a href="#home" onclick="closeMnav()">🏠 Home</a>
   <a href="#packages" onclick="closeMnav()">💼 Packages</a>
   <a href="#gallery" onclick="closeMnav()">📸 Gallery</a>
-  <a href="#testimonials" onclick="closeMnav()">⭐ Reviews</a>
-  <a href="#feedback" onclick="closeMnav()">💬 Feedback</a>
+  <a href="#reviews" onclick="closeMnav()">⭐ Reviews</a>
   <a href="#contact" onclick="closeMnav()">📞 Contact</a>
-  <a href="https://wa.me/917588924408" target="_blank" style="color:var(--green);font-weight:700;">💬 WhatsApp Us</a>
+  <a href="https://wa.me/917588924408" target="_blank" style="color:var(--wa);font-weight:700;">💬 WhatsApp Us</a>
 </nav>
 
-<!-- HERO -->
-<section id="hero">
+<!-- ══ HERO ══ -->
+<section id="home">
   <div class="hero-bg"></div>
   <div class="hero-inner">
-    <div class="hero-badge">✈️ Pune's #1 Travel Company</div>
+    <div class="hero-chip">✈️ Pune's #1 Travel Company</div>
     <h1 class="hero-title">Explore<br><em>the World</em></h1>
-    <p class="hero-tagline">From Lonavala hills to Goa beaches — we plan everything. Affordable trips, real memories, zero stress.</p>
+    <p class="hero-sub">From Lonavala hills to Goa beaches — we plan everything. Affordable trips, zero stress, real memories.</p>
     <div class="hero-btns">
-      <a href="#packages" class="btn-main">🗺️ View All Packages</a>
-      <a href="#gallery" class="btn-outline-white">📸 See Gallery</a>
+      <a href="#packages" class="btn-orange">🗺️ View Packages</a>
+      <a href="#gallery" class="btn-ghost">📸 See Gallery</a>
     </div>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">200+</div><div class="stat-lbl">Trips Done</div></div>
-      <div class="stat"><div class="stat-num">800+</div><div class="stat-lbl">Happy Tourists</div></div>
-      <div class="stat"><div class="stat-num">4.9★</div><div class="stat-lbl">Rated</div></div>
-      <div class="stat"><div class="stat-num">7</div><div class="stat-lbl">Destinations</div></div>
+      <div class="stat"><div class="stat-n">200+</div><div class="stat-l">Trips Done</div></div>
+      <div class="stat"><div class="stat-n">800+</div><div class="stat-l">Happy Tourists</div></div>
+      <div class="stat"><div class="stat-n">4.9★</div><div class="stat-l">Rated</div></div>
+      <div class="stat"><div class="stat-n">7</div><div class="stat-l">Destinations</div></div>
     </div>
   </div>
   <div class="hero-scroll">Scroll Down</div>
 </section>
 
-<!-- MARQUEE -->
-<div id="marquee-sec">
+<!-- ══ MARQUEE ══ -->
+<div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="hi">✈️ Goa</span><span>•</span><span class="hi">🏔️ Manali</span><span>•</span>
-    <span class="hi">🌿 Lonavala</span><span>•</span><span class="hi">🏯 Raigad Fort</span><span>•</span>
-    <span class="hi">🌊 Kashid Beach</span><span>•</span><span class="hi">🍓 Mahabaleshwar</span><span>•</span>
-    <span class="hi">🚗 Pune to Goa</span><span>•</span><span class="hi">✈️ Goa</span><span>•</span>
-    <span class="hi">🏔️ Manali</span><span>•</span><span class="hi">🌿 Lonavala</span><span>•</span>
-    <span class="hi">🏯 Raigad Fort</span><span>•</span><span class="hi">🌊 Kashid Beach</span><span>•</span>
-    <span class="hi">🍓 Mahabaleshwar</span><span>•</span><span class="hi">🚗 Pune to Goa</span><span>•</span>
+    <span class="hi">✈️ Goa</span><span class="dot">•</span>
+    <span class="hi">🏔️ Manali</span><span class="dot">•</span>
+    <span class="hi">🌿 Lonavala</span><span class="dot">•</span>
+    <span class="hi">🏯 Raigad Fort</span><span class="dot">•</span>
+    <span class="hi">🍓 Mahabaleshwar</span><span class="dot">•</span>
+    <span class="hi">🚗 Pune to Goa</span><span class="dot">•</span>
+    <span class="hi">🏰 Vishalgad</span><span class="dot">•</span>
+    <span class="hi">✈️ Goa</span><span class="dot">•</span>
+    <span class="hi">🏔️ Manali</span><span class="dot">•</span>
+    <span class="hi">🌿 Lonavala</span><span class="dot">•</span>
+    <span class="hi">🏯 Raigad Fort</span><span class="dot">•</span>
+    <span class="hi">🍓 Mahabaleshwar</span><span class="dot">•</span>
+    <span class="hi">🚗 Pune to Goa</span><span class="dot">•</span>
+    <span class="hi">🏰 Vishalgad</span><span class="dot">•</span>
   </div>
 </div>
 
-<!-- WHY US -->
-<section id="why">
-  <div class="sec-head">
-    <p class="sec-lbl">Why Choose Us</p>
-    <h2 class="sec-title">We Make Travel Easy 🤝</h2>
-    <p class="sec-sub">Hundreds of happy travelers trust Wanderlust Tours from Pune.</p>
+<!-- ══ WHY US ══ -->
+<section class="sec" id="why">
+  <div class="sh">
+    <p class="sl">Why Choose Us</p>
+    <h2 class="st">We Make Travel Easy 🤝</h2>
+    <p class="sd">Hundreds of happy travelers trust Wanderlust Tours — from Pune, for everyone.</p>
   </div>
   <div class="why-grid">
-    <div class="why-card"><div class="why-icon">💰</div><h3>Budget Friendly</h3><p>Best prices, no hidden charges ever</p></div>
-    <div class="why-card"><div class="why-icon">📲</div><h3>WhatsApp Booking</h3><p>Book instantly, no forms or login</p></div>
-    <div class="why-card"><div class="why-icon">🛡️</div><h3>Safe & Trusted</h3><p>800+ satisfied travelers from Pune</p></div>
-    <div class="why-card"><div class="why-icon">🗓️</div><h3>Flexible Dates</h3><p>You choose, we arrange everything</p></div>
+    <div class="why-card"><div class="why-icon">💰</div><h3>Budget Friendly</h3><p>Best prices, no hidden charges</p></div>
+    <div class="why-card"><div class="why-icon">📲</div><h3>WhatsApp Booking</h3><p>Book instantly, no login needed</p></div>
+    <div class="why-card"><div class="why-icon">🛡️</div><h3>Safe & Trusted</h3><p>800+ satisfied travelers</p></div>
+    <div class="why-card"><div class="why-icon">🗓️</div><h3>Flexible Dates</h3><p>You choose, we arrange all</p></div>
   </div>
 </section>
 
-<!-- COUNTER -->
-<div id="counter">
-  <div class="counter-item"><div class="counter-num" data-target="200">0</div><div class="counter-lbl">Trips Completed</div></div>
-  <div class="counter-item"><div class="counter-num" data-target="800">0</div><div class="counter-lbl">Happy Travelers</div></div>
-  <div class="counter-item"><div class="counter-num" data-target="7">0</div><div class="counter-lbl">Destinations</div></div>
-  <div class="counter-item"><div class="counter-num" data-target="5">0</div><div class="counter-lbl">Years Experience</div></div>
+<!-- ══ COUNTER ══ -->
+<div class="counter-strip">
+  <div class="cnt"><div class="cnt-n" data-t="200">0</div><div class="cnt-l">Trips Completed</div></div>
+  <div class="cnt"><div class="cnt-n" data-t="800">0</div><div class="cnt-l">Happy Travelers</div></div>
+  <div class="cnt"><div class="cnt-n" data-t="7">0</div><div class="cnt-l">Destinations</div></div>
+  <div class="cnt"><div class="cnt-n" data-t="5">0</div><div class="cnt-l">Years Experience</div></div>
 </div>
 
-<!-- PACKAGES -->
+<!-- ══ PACKAGES ══ -->
 <section class="sec" id="packages">
-  <div class="sec-head">
-    <p class="sec-lbl">Trip Packages</p>
-    <h2 class="sec-title">Pick Your Adventure 💼</h2>
-    <p class="sec-sub">All trips from Pune — transport arranged, hotel booked, memories guaranteed.</p>
+  <div class="sh">
+    <p class="sl">Trip Packages</p>
+    <h2 class="st">Pick Your Adventure 💼</h2>
+    <p class="sd">All trips from Pune — transport arranged, hotel booked, memories guaranteed.</p>
   </div>
   <div class="pkg-grid">
 
-    <div class="pkg-card">
-      <div class="pkg-img">
+    <div class="card">
+      <div class="card-img">
         <img src="https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=600&q=80" alt="Goa" loading="lazy"/>
-        <span class="pkg-badge" style="background:#f77f00;">🔥 Most Popular</span>
-        <div class="pkg-fav">❤️</div>
+        <span class="card-badge" style="background:#f77f00;">🔥 Popular</span>
+        <div class="card-fav" onclick="toggleFav(this)">🤍</div>
       </div>
-      <div class="pkg-body">
-        <div class="pkg-name">Goa Beach Trip</div>
-        <div class="pkg-loc">📍 Goa, India</div>
-        <div class="pkg-includes">
-          <span class="inc">🚌 Transport</span><span class="inc">🏨 Hotel</span><span class="inc">🍽️ Breakfast</span><span class="inc">🏖️ Beach</span>
+      <div class="card-body">
+        <div class="card-name">Goa Beach Trip</div>
+        <div class="card-loc">📍 Goa, India</div>
+        <div class="card-tags"><span class="ctag">🚌 Transport</span><span class="ctag">🏨 Hotel</span><span class="ctag">🍽️ Breakfast</span><span class="ctag">🏖️ Beach</span></div>
+        <div class="card-footer">
+          <div class="card-price">₹4,999 <small>/person</small></div>
+          <div class="card-dur">3 Days</div>
         </div>
-        <div class="pkg-footer">
-          <div class="pkg-price">₹4,999 <small>/person</small></div>
-          <div class="pkg-dur">3 Days</div>
-        </div>
-        <a class="book-now" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20book%20Goa%20Beach%20Trip%20%E2%80%94%20%E2%82%B94%2C999%20per%20person." target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          Book Now on WhatsApp
-        </a>
+        <button class="book-btn" onclick="openBooking('Goa Beach Trip','₹4,999','🏖️')">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Book Now
+        </button>
       </div>
     </div>
 
-    <div class="pkg-card">
-      <div class="pkg-img">
+    <div class="card">
+      <div class="card-img">
         <img src="https://images.unsplash.com/photo-1600688640154-9619e002df30?w=600&q=80" alt="Manali" loading="lazy"/>
-        <span class="pkg-badge" style="background:#023e8a;">⛰️ Adventure</span>
-        <div class="pkg-fav">❤️</div>
+        <span class="card-badge" style="background:#023e8a;">⛰️ Adventure</span>
+        <div class="card-fav" onclick="toggleFav(this)">🤍</div>
       </div>
-      <div class="pkg-body">
-        <div class="pkg-name">Manali Snow Trip</div>
-        <div class="pkg-loc">📍 Manali, Himachal Pradesh</div>
-        <div class="pkg-includes">
-          <span class="inc">🚌 Bus</span><span class="inc">🏨 Hotel</span><span class="inc">🍽️ Meals</span><span class="inc">🎿 Snow</span>
+      <div class="card-body">
+        <div class="card-name">Manali Snow Trip</div>
+        <div class="card-loc">📍 Manali, Himachal Pradesh</div>
+        <div class="card-tags"><span class="ctag">🚌 Bus</span><span class="ctag">🏨 Hotel</span><span class="ctag">🍽️ Meals</span><span class="ctag">🎿 Snow</span></div>
+        <div class="card-footer">
+          <div class="card-price">₹7,999 <small>/person</small></div>
+          <div class="card-dur">5 Days</div>
         </div>
-        <div class="pkg-footer">
-          <div class="pkg-price">₹7,999 <small>/person</small></div>
-          <div class="pkg-dur">5 Days</div>
-        </div>
-        <a class="book-now" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20book%20Manali%20Snow%20Trip%20%E2%80%94%20%E2%82%B97%2C999%20per%20person." target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          Book Now on WhatsApp
-        </a>
+        <button class="book-btn" onclick="openBooking('Manali Snow Trip','₹7,999','⛰️')">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Book Now
+        </button>
       </div>
     </div>
 
-    <div class="pkg-card">
-      <div class="pkg-img">
+    <div class="card">
+      <div class="card-img">
         <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80" alt="Lonavala" loading="lazy"/>
-        <span class="pkg-badge" style="background:#2d6a4f;">🌿 Budget Pick</span>
-        <div class="pkg-fav">❤️</div>
+        <span class="card-badge" style="background:#2d6a4f;">🌿 Budget</span>
+        <div class="card-fav" onclick="toggleFav(this)">🤍</div>
       </div>
-      <div class="pkg-body">
-        <div class="pkg-name">Lonavala Weekend</div>
-        <div class="pkg-loc">📍 Lonavala, Maharashtra</div>
-        <div class="pkg-includes">
-          <span class="inc">🚌 Transport</span><span class="inc">🏡 Cottage</span><span class="inc">🌄 Viewpoints</span>
+      <div class="card-body">
+        <div class="card-name">Lonavala Weekend</div>
+        <div class="card-loc">📍 Lonavala, Maharashtra</div>
+        <div class="card-tags"><span class="ctag">🚌 Transport</span><span class="ctag">🏡 Cottage</span><span class="ctag">🌄 Viewpoints</span></div>
+        <div class="card-footer">
+          <div class="card-price">₹2,999 <small>/person</small></div>
+          <div class="card-dur">2 Days</div>
         </div>
-        <div class="pkg-footer">
-          <div class="pkg-price">₹2,999 <small>/person</small></div>
-          <div class="pkg-dur">2 Days</div>
-        </div>
-        <a class="book-now" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20book%20Lonavala%20Weekend%20Trip%20%E2%80%94%20%E2%82%B92%2C999%20per%20person." target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          Book Now on WhatsApp
-        </a>
+        <button class="book-btn" onclick="openBooking('Lonavala Weekend','₹2,999','🌿')">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Book Now
+        </button>
       </div>
     </div>
 
-    <div class="pkg-card">
-      <div class="pkg-img">
+    <div class="card">
+      <div class="card-img">
         <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=600&q=80" alt="Raigad" loading="lazy"/>
-        <span class="pkg-badge" style="background:#7b2d8b;">🏯 Heritage</span>
-        <div class="pkg-fav">❤️</div>
+        <span class="card-badge" style="background:#7b2d8b;">🏯 Heritage</span>
+        <div class="card-fav" onclick="toggleFav(this)">🤍</div>
       </div>
-      <div class="pkg-body">
-        <div class="pkg-name">Raigad Fort Trek</div>
-        <div class="pkg-loc">📍 Raigad, Maharashtra</div>
-        <div class="pkg-includes">
-          <span class="inc">🚌 Transport</span><span class="inc">🥾 Trek</span><span class="inc">🍱 Lunch</span>
+      <div class="card-body">
+        <div class="card-name">Raigad Fort Trek</div>
+        <div class="card-loc">📍 Raigad, Maharashtra</div>
+        <div class="card-tags"><span class="ctag">🚌 Transport</span><span class="ctag">🥾 Trek</span><span class="ctag">🍱 Lunch</span></div>
+        <div class="card-footer">
+          <div class="card-price">₹1,999 <small>/person</small></div>
+          <div class="card-dur">1 Day</div>
         </div>
-        <div class="pkg-footer">
-          <div class="pkg-price">₹1,999 <small>/person</small></div>
-          <div class="pkg-dur">1 Day</div>
-        </div>
-        <a class="book-now" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20book%20Raigad%20Fort%20Trek%20%E2%80%94%20%E2%82%B91%2C999%20per%20person." target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          Book Now on WhatsApp
-        </a>
+        <button class="book-btn" onclick="openBooking('Raigad Fort Trek','₹1,999','🏯')">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Book Now
+        </button>
       </div>
     </div>
 
-    <div class="pkg-card">
-      <div class="pkg-img">
+    <div class="card">
+      <div class="card-img">
         <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Vishalgad" loading="lazy"/>
-        <span class="pkg-badge" style="background:#c1121f;">🥾 Trekking</span>
-        <div class="pkg-fav">❤️</div>
+        <span class="card-badge" style="background:#c1121f;">🥾 Trekking</span>
+        <div class="card-fav" onclick="toggleFav(this)">🤍</div>
       </div>
-      <div class="pkg-body">
-        <div class="pkg-name">Vishalgad Fort Trek</div>
-        <div class="pkg-loc">📍 Kolhapur, Maharashtra</div>
-        <div class="pkg-includes">
-          <span class="inc">🚌 Transport</span><span class="inc">🏯 Fort</span><span class="inc">🌲 Nature</span><span class="inc">🍱 Lunch</span>
+      <div class="card-body">
+        <div class="card-name">Vishalgad Fort Trek</div>
+        <div class="card-loc">📍 Kolhapur, Maharashtra</div>
+        <div class="card-tags"><span class="ctag">🚌 Transport</span><span class="ctag">🏯 Fort</span><span class="ctag">🌲 Nature</span><span class="ctag">🍱 Lunch</span></div>
+        <div class="card-footer">
+          <div class="card-price">₹2,499 <small>/person</small></div>
+          <div class="card-dur">2 Days</div>
         </div>
-        <div class="pkg-footer">
-          <div class="pkg-price">₹2,499 <small>/person</small></div>
-          <div class="pkg-dur">2 Days</div>
-        </div>
-        <a class="book-now" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20book%20Vishalgad%20Fort%20Trek%20%E2%80%94%20%E2%82%B92%2C499%20per%20person." target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          Book Now on WhatsApp
-        </a>
+        <button class="book-btn" onclick="openBooking('Vishalgad Fort Trek','₹2,499','🥾')">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Book Now
+        </button>
       </div>
     </div>
 
-    <div class="pkg-card">
-      <div class="pkg-img">
+    <div class="card">
+      <div class="card-img">
         <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80" alt="Pune to Goa" loading="lazy"/>
-        <span class="pkg-badge" style="background:#0077b6;">🚗 Road Trip</span>
-        <div class="pkg-fav">❤️</div>
+        <span class="card-badge" style="background:#0077b6;">🚗 Road Trip</span>
+        <div class="card-fav" onclick="toggleFav(this)">🤍</div>
       </div>
-      <div class="pkg-body">
-        <div class="pkg-name">Pune to Goa Tour</div>
-        <div class="pkg-loc">📍 Pune → Goa</div>
-        <div class="pkg-includes">
-          <span class="inc">🚗 Road Trip</span><span class="inc">🏨 Hotel</span><span class="inc">🍽️ Meals</span><span class="inc">🏖️ Beaches</span>
+      <div class="card-body">
+        <div class="card-name">Pune to Goa Tour</div>
+        <div class="card-loc">📍 Pune → Goa</div>
+        <div class="card-tags"><span class="ctag">🚗 Road Trip</span><span class="ctag">🏨 Hotel</span><span class="ctag">🍽️ Meals</span><span class="ctag">🏖️ Beaches</span></div>
+        <div class="card-footer">
+          <div class="card-price">₹6,999 <small>/person</small></div>
+          <div class="card-dur">4 Days</div>
         </div>
-        <div class="pkg-footer">
-          <div class="pkg-price">₹6,999 <small>/person</small></div>
-          <div class="pkg-dur">4 Days</div>
-        </div>
-        <a class="book-now" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20book%20Pune%20to%20Goa%20Tour%20%E2%80%94%20%E2%82%B96%2C999%20per%20person." target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          Book Now on WhatsApp
-        </a>
+        <button class="book-btn" onclick="openBooking('Pune to Goa Tour','₹6,999','🚗')">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Book Now
+        </button>
       </div>
     </div>
 
-    <div class="pkg-card">
-      <div class="pkg-img">
+    <div class="card">
+      <div class="card-img">
         <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80" alt="Mahabaleshwar" loading="lazy"/>
-        <span class="pkg-badge" style="background:#e63946;">🍓 New!</span>
-        <div class="pkg-fav">❤️</div>
+        <span class="card-badge" style="background:#e63946;">🍓 New!</span>
+        <div class="card-fav" onclick="toggleFav(this)">🤍</div>
       </div>
-      <div class="pkg-body">
-        <div class="pkg-name">Mahabaleshwar Trip</div>
-        <div class="pkg-loc">📍 Mahabaleshwar, Maharashtra</div>
-        <div class="pkg-includes">
-          <span class="inc">🚌 Bus</span><span class="inc">🏨 Taj Gibson</span><span class="inc">🥗 Veg Meals</span><span class="inc">🍓 Sightseeing</span>
+      <div class="card-body">
+        <div class="card-name">Mahabaleshwar Trip</div>
+        <div class="card-loc">📍 Mahabaleshwar, Maharashtra</div>
+        <div class="card-tags"><span class="ctag">🚌 Bus</span><span class="ctag">🏨 Taj Gibson</span><span class="ctag">🥗 Veg Meals</span><span class="ctag">🍓 Sightseeing</span></div>
+        <div class="card-footer">
+          <div class="card-price">₹3,499 <small>/person</small></div>
+          <div class="card-dur">2N/3D</div>
         </div>
-        <div class="pkg-footer">
-          <div class="pkg-price">₹3,499 <small>/person</small></div>
-          <div class="pkg-dur">2N/3D</div>
-        </div>
-        <a class="book-now" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20book%20Mahabaleshwar%20Trip%20%E2%80%94%20%E2%82%B93%2C499%20per%20person." target="_blank">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-          Book Now on WhatsApp
-        </a>
+        <button class="book-btn" onclick="openBooking('Mahabaleshwar Trip','₹3,499','🍓')">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+          Book Now
+        </button>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="sec sec-alt" id="gallery">
-  <div class="sec-head">
-    <p class="sec-lbl">Real Memories</p>
-    <h2 class="sec-title">Travel Gallery 📸</h2>
-    <p class="sec-sub">Real photos from real trips — every picture is a story worth living.</p>
+<!-- ══ GALLERY ══ -->
+<section class="sec sec-sand" id="gallery">
+  <div class="sh">
+    <p class="sl">Real Memories</p>
+    <h2 class="st">Travel Gallery 📸</h2>
+    <p class="sd">Real photos from real trips — every picture is a story worth living.</p>
   </div>
-  <div class="g-tabs">
-    <button class="g-tab on" onclick="gFilter(this,'all')">All</button>
-    <button class="g-tab" onclick="gFilter(this,'beach')">🏖️ Beach</button>
-    <button class="g-tab" onclick="gFilter(this,'mountain')">⛰️ Mountain</button>
-    <button class="g-tab" onclick="gFilter(this,'fort')">🏯 Forts</button>
+  <div class="gtabs">
+    <button class="gtab on" onclick="gFilter(this,'all')">All</button>
+    <button class="gtab" onclick="gFilter(this,'beach')">🏖️ Beach</button>
+    <button class="gtab" onclick="gFilter(this,'mountain')">⛰️ Mountain</button>
+    <button class="gtab" onclick="gFilter(this,'fort')">🏯 Forts</button>
   </div>
-  <div class="g-grid">
-    <div class="g-item big" data-c="beach">
-      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80" alt="Goa" loading="lazy"/>
-      <div class="g-cap"><span>🏖️ Goa Beach Sunset</span></div>
-    </div>
-    <div class="g-item" data-c="mountain">
-      <img src="https://images.unsplash.com/photo-1600688640154-9619e002df30?w=500&q=80" alt="Manali" loading="lazy"/>
-      <div class="g-cap"><span>⛰️ Manali Snow</span></div>
-    </div>
-    <div class="g-item" data-c="beach">
-      <img src="https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=500&q=80" alt="Goa2" loading="lazy"/>
-      <div class="g-cap"><span>🌊 Goa Vibes</span></div>
-    </div>
-    <div class="g-item" data-c="mountain">
-      <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80" alt="Lonavala" loading="lazy"/>
-      <div class="g-cap"><span>🌿 Lonavala Greens</span></div>
-    </div>
-    <div class="g-item" data-c="fort">
-      <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=500&q=80" alt="Raigad" loading="lazy"/>
-      <div class="g-cap"><span>🏯 Raigad Fort</span></div>
-    </div>
-    <div class="g-item" data-c="mountain">
-      <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&q=80" alt="Road" loading="lazy"/>
-      <div class="g-cap"><span>🚗 Pune → Goa Road</span></div>
-    </div>
+  <div class="ggrid">
+    <div class="gitem big" data-c="beach"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80" alt="Goa" loading="lazy"/><div class="gcap"><span>🏖️ Goa Beach Sunset</span></div></div>
+    <div class="gitem" data-c="mountain"><img src="https://images.unsplash.com/photo-1600688640154-9619e002df30?w=500&q=80" alt="Manali" loading="lazy"/><div class="gcap"><span>⛰️ Manali Snow</span></div></div>
+    <div class="gitem" data-c="beach"><img src="https://images.unsplash.com/photo-1587974928442-77dc3e0dba72?w=500&q=80" alt="Goa2" loading="lazy"/><div class="gcap"><span>🌊 Goa Vibes</span></div></div>
+    <div class="gitem" data-c="mountain"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500&q=80" alt="Lonavala" loading="lazy"/><div class="gcap"><span>🌿 Lonavala</span></div></div>
+    <div class="gitem" data-c="fort"><img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?w=500&q=80" alt="Raigad" loading="lazy"/><div class="gcap"><span>🏯 Raigad Fort</span></div></div>
+    <div class="gitem" data-c="mountain"><img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=500&q=80" alt="Road" loading="lazy"/><div class="gcap"><span>🚗 Pune → Goa</span></div></div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="sec" id="testimonials">
-  <div class="sec-head">
-    <p class="sec-lbl">Traveler Stories</p>
-    <h2 class="sec-title">What They Say ⭐</h2>
-    <p class="sec-sub">800+ happy travelers can't be wrong. Here are some of their words.</p>
+<!-- ══ REVIEWS ══ -->
+<section class="sec" id="reviews">
+  <div class="sh">
+    <p class="sl">Traveler Stories</p>
+    <h2 class="st">What They Say ⭐</h2>
+    <p class="sd">Real reviews from real travelers who booked with Wanderlust Tours.</p>
   </div>
-  <div class="testi-grid">
-    <div class="testi-card"><div class="t-stars">★★★★★</div><p class="t-text">"Best trip of my life! Goa package was perfectly planned, hotel was amazing and team was always available. Already booked next trip!"</p><div class="t-author"><div class="t-av">P</div><div><div class="t-name">Priya Sharma</div><div class="t-trip">🏖️ Goa Trip — Feb 2025</div></div></div></div>
-    <div class="testi-card"><div class="t-stars">★★★★★</div><p class="t-text">"Manali in December was magical! Snow everywhere, bonfire every night, and the price was unbelievably affordable from Pune."</p><div class="t-author"><div class="t-av">R</div><div><div class="t-name">Rohit Kulkarni</div><div class="t-trip">⛰️ Manali — Dec 2024</div></div></div></div>
-    <div class="testi-card"><div class="t-stars">★★★★★</div><p class="t-text">"Raigad Fort trek was incredible. The guide was so knowledgeable, transport was smooth and the whole day was worth every rupee!"</p><div class="t-author"><div class="t-av">S</div><div><div class="t-name">Sneha Patil</div><div class="t-trip">🏯 Raigad Trek — Jan 2025</div></div></div></div>
-    <div class="testi-card"><div class="t-stars">★★★★★</div><p class="t-text">"Lonavala weekend with family was perfect. Cottage was clean, viewpoints were stunning. Kids loved it! Will book again for sure."</p><div class="t-author"><div class="t-av">A</div><div><div class="t-name">Aakash Deshmukh</div><div class="t-trip">🌿 Lonavala — Mar 2025</div></div></div></div>
+  <div class="rev-grid">
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Best trip of my life! Goa package was perfectly planned, hotel was great and the team always available. Already booked my next trip!"</p><div class="rev-author"><div class="rev-av">P</div><div><div class="rev-name">Priya Sharma</div><div class="rev-trip">🏖️ Goa Trip</div></div></div></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Manali in December was magical! Snow everywhere, bonfire every night, and the price was unbelievably affordable from Pune!"</p><div class="rev-author"><div class="rev-av">R</div><div><div class="rev-name">Rohit Kulkarni</div><div class="rev-trip">⛰️ Manali Trip</div></div></div></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Raigad Fort trek was incredible. Guide was knowledgeable, transport smooth. The whole day was worth every rupee!"</p><div class="rev-author"><div class="rev-av">S</div><div><div class="rev-name">Sneha Patil</div><div class="rev-trip">🏯 Raigad Trek</div></div></div></div>
+    <div class="rev-card"><div class="rev-stars">★★★★★</div><p class="rev-text">"Lonavala weekend with family was perfect. Cottage clean, viewpoints stunning. Kids loved it! Will definitely book again!"</p><div class="rev-author"><div class="rev-av">A</div><div><div class="rev-name">Aakash Deshmukh</div><div class="rev-trip">🌿 Lonavala Trip</div></div></div></div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="sec" id="how">
-  <div class="sec-head">
-    <p class="sec-lbl" style="color:rgba(255,255,255,0.5);">Simple Process</p>
-    <h2 class="sec-title">How to Book in 4 Steps 📲</h2>
-    <p class="sec-sub">No forms. No login. Just WhatsApp — and you're set for adventure.</p>
+<!-- ══ HOW IT WORKS ══ -->
+<section class="sec sec-blue" id="how">
+  <div class="sh">
+    <p class="sl">Simple Process</p>
+    <h2 class="st">Book in 4 Steps 📲</h2>
+    <p class="sd">No forms, no login — just click Book Now and we handle everything.</p>
   </div>
   <div class="how-grid">
-    <div class="how-card"><div class="how-num">1</div><div><h3>Browse Packages</h3><p>Scroll up and pick the trip that excites you!</p></div></div>
-    <div class="how-card"><div class="how-num">2</div><div><h3>Click Book Now</h3><p>WhatsApp opens with the trip name auto-typed.</p></div></div>
-    <div class="how-card"><div class="how-num">3</div><div><h3>We Reply Fast</h3><p>Dates, details and payment — all on WhatsApp.</p></div></div>
+    <div class="how-card"><div class="how-num">1</div><div><h3>Choose a Package</h3><p>Pick the trip that excites you from above.</p></div></div>
+    <div class="how-card"><div class="how-num">2</div><div><h3>Click Book Now</h3><p>A popup opens — enter your name.</p></div></div>
+    <div class="how-card"><div class="how-num">3</div><div><h3>Confirm on WhatsApp</h3><p>Message auto-sent. We reply with all details fast.</p></div></div>
     <div class="how-card"><div class="how-num">4</div><div><h3>Pack Your Bags! ✈️</h3><p>Show up and enjoy — we handle everything else.</p></div></div>
   </div>
   <div style="text-align:center;">
-    <a class="wa-cta" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20plan%20a%20trip%20with%20Wanderlust%20Tours." target="_blank">
+    <a class="wa-big" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20plan%20a%20trip." target="_blank">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
-      Start Chatting Now
+      Chat on WhatsApp Now
     </a>
   </div>
 </section>
 
-<!-- FEEDBACK -->
-<section class="sec sec-alt" id="feedback">
-  <div class="sec-head">
-    <p class="sec-lbl">Share Experience</p>
-    <h2 class="sec-title">Leave a Review 💬</h2>
-    <p class="sec-sub">Traveled with us? Your review helps other explorers decide!</p>
+<!-- ══ FEEDBACK ══ -->
+<section class="sec sec-sand" id="feedback">
+  <div class="sh">
+    <p class="sl">Share Experience</p>
+    <h2 class="st">Leave a Review 💬</h2>
+    <p class="sd">Traveled with us? Your words inspire other explorers!</p>
   </div>
-  <div class="fb-box">
-    <h3>Write Your Review ✍️</h3>
+  <div class="fb-wrap">
+    <div class="fb-title">Write Your Review ✍️</div>
     <div class="fg"><label>Your Name</label><input type="text" id="fn" placeholder="e.g. Rahul Joshi"/></div>
     <div class="fg"><label>Your Trip</label>
       <select id="ft">
@@ -697,100 +826,120 @@ header {
       </select>
     </div>
     <div class="fg"><label>Rating</label>
-      <div class="star-pick">
-        <input type="radio" id="s5" name="s" value="5"><label for="s5">★</label>
-        <input type="radio" id="s4" name="s" value="4"><label for="s4">★</label>
-        <input type="radio" id="s3" name="s" value="3"><label for="s3">★</label>
-        <input type="radio" id="s2" name="s" value="2"><label for="s2">★</label>
-        <input type="radio" id="s1" name="s" value="1"><label for="s1">★</label>
+      <div class="star-row">
+        <input type="radio" id="s5" name="s"><label for="s5">★</label>
+        <input type="radio" id="s4" name="s"><label for="s4">★</label>
+        <input type="radio" id="s3" name="s"><label for="s3">★</label>
+        <input type="radio" id="s2" name="s"><label for="s2">★</label>
+        <input type="radio" id="s1" name="s"><label for="s1">★</label>
       </div>
     </div>
     <div class="fg"><label>Your Review</label><textarea rows="4" id="fr" placeholder="Tell others about your experience..."></textarea></div>
-    <button class="fb-btn" onclick="submitFb()">Submit Review ✈️</button>
-    <div class="fb-ok" id="fb-ok">🎉 Thank you! Your review has been submitted.</div>
+    <button class="fb-submit" onclick="submitFb()">Submit Review ✈️</button>
+    <div class="fb-done" id="fbdone">🎉 Thank you! Your review has been submitted.</div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="sec" id="contact">
-  <p class="sec-lbl">Get In Touch</p>
-  <h2 class="sec-title">Contact Us 📞</h2>
-  <div class="contact-cards">
-    <a class="cc" href="tel:+917588924408"><div class="cc-icon" style="background:rgba(0,180,216,0.18);">📞</div><div><h4>Call Us</h4><p>+91 75889 24408</p></div></a>
-    <a class="cc" href="https://wa.me/917588924408?text=Hi%20Wanderlust%20Tours!" target="_blank"><div class="cc-icon" style="background:rgba(37,211,102,0.18);">💬</div><div><h4>WhatsApp</h4><p>+91 75889 24408</p></div></a>
-    <a class="cc" href="https://instagram.com/wanderlusttours" target="_blank"><div class="cc-icon" style="background:rgba(225,48,108,0.18);">📸</div><div><h4>Instagram</h4><p>@wanderlusttours</p></div></a>
-    <a class="cc" href="mailto:wanderlusttours@gmail.com"><div class="cc-icon" style="background:rgba(247,127,0,0.18);">✉️</div><div><h4>Email</h4><p>wanderlusttours@gmail.com</p></div></a>
+<!-- ══ CONTACT ══ -->
+<section class="sec sec-dark" id="contact">
+  <p class="sl">Get In Touch</p>
+  <h2 class="st">Contact Us 📞</h2>
+  <div class="cc-grid">
+    <a class="cc" href="tel:+917588924408"><div class="cc-icon" style="background:rgba(0,180,216,0.18);">📞</div><div><h4>Call — Number 1</h4><p>+91 75889 24408</p></div></a>
+    <a class="cc" href="tel:+917387847771"><div class="cc-icon" style="background:rgba(0,180,216,0.18);">📞</div><div><h4>Call — Number 2</h4><p>+91 73878 47771</p></div></a>
+    <a class="cc" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20plan%20a%20trip." target="_blank"><div class="cc-icon" style="background:rgba(37,211,102,0.18);">💬</div><div><h4>WhatsApp 1</h4><p>+91 75889 24408</p></div></a>
+    <a class="cc" href="https://wa.me/917387847771?text=Hi!%20I%20want%20to%20plan%20a%20trip." target="_blank"><div class="cc-icon" style="background:rgba(37,211,102,0.18);">💬</div><div><h4>WhatsApp 2</h4><p>+91 73878 47771</p></div></a>
+    <a class="cc" href="https://instagram.com/wanderlust_tours_09" target="_blank"><div class="cc-icon" style="background:rgba(225,48,108,0.18);">📸</div><div><h4>Instagram</h4><p>@wanderlust_tours_09</p></div></a>
+    <a class="cc" href="mailto:saurabhamble@gmail.com"><div class="cc-icon" style="background:rgba(247,127,0,0.18);">✉️</div><div><h4>Email</h4><p>saurabhamble@gmail.com</p></div></a>
   </div>
-  <div class="footer">
-    <div class="f-logo">Wanderlust<span>Tours</span></div>
-    <div class="f-tag">Explore the World With Us — From Pune, For Everyone 🌍</div>
-    <div class="f-links">
-      <a href="#hero">Home</a><a href="#packages">Packages</a>
-      <a href="#gallery">Gallery</a><a href="#testimonials">Reviews</a>
-      <a href="#contact">Contact</a>
+  <div class="ftr">
+    <div class="ftr-logo">Wanderlust<span>Tours</span></div>
+    <div class="ftr-tag">Explore the World With Us — From Pune, For Everyone 🌍</div>
+    <div class="ftr-links">
+      <a href="#home">Home</a><a href="#packages">Packages</a>
+      <a href="#gallery">Gallery</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
     </div>
-    <div class="f-copy">© 2025 Wanderlust Tours · Pune, Maharashtra · All rights reserved</div>
+    <div class="ftr-copy">© 2025 Wanderlust Tours · Pune, Maharashtra · All rights reserved</div>
   </div>
 </section>
 
-<!-- Floating WhatsApp -->
-<a class="float-wa" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20plan%20a%20trip." target="_blank" title="Chat on WhatsApp">
+<!-- BOOKING POPUP -->
+<div id="bookingBox">
+  <div class="popup-inner">
+    <div class="popup-icon" id="popIcon">🌍</div>
+    <div class="popup-title" id="popName">Trip Name</div>
+    <div class="popup-price" id="popPrice">₹0</div>
+    <input class="popup-input" type="text" id="popUserName" placeholder="Enter your name..." />
+    <input class="popup-input" type="tel" id="popPhone" placeholder="Your phone number (optional)" />
+    <button class="popup-wa" onclick="sendBooking()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
+      Confirm & Open WhatsApp
+    </button>
+    <button class="popup-cancel" onclick="closeBooking()">Cancel</button>
+    <p class="popup-note">💬 WhatsApp will open with your booking details pre-filled.</p>
+  </div>
+</div>
+
+<!-- FLOATING WA -->
+<a class="float-wa" href="https://wa.me/917588924408?text=Hi!%20I%20want%20to%20plan%20a%20trip." target="_blank">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.118 1.528 5.845L.057 23.887l6.234-1.635A11.942 11.942 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.822 9.822 0 01-5.006-1.368l-.36-.213-3.7.971.988-3.607-.234-.372A9.818 9.818 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182S21.818 6.58 21.818 12 17.42 21.818 12 21.818z"/></svg>
 </a>
 
-<!-- Back to Top -->
-<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<!-- BACK TO TOP -->
+<button id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-// LOADER
+// ── LOADER ──
 window.addEventListener('load', () => {
   setTimeout(() => {
     const l = document.getElementById('loader');
     l.style.opacity = '0';
-    setTimeout(() => l.style.display = 'none', 500);
-  }, 2000);
+    setTimeout(() => l.style.display = 'none', 600);
+  }, 2100);
 });
 
-// HAMBURGER
-document.getElementById('hbg').addEventListener('click', () => document.getElementById('mnav').classList.toggle('open'));
+// ── HAMBURGER ──
+document.getElementById('hbg').addEventListener('click', () => {
+  document.getElementById('mnav').classList.toggle('open');
+});
 function closeMnav() { document.getElementById('mnav').classList.remove('open'); }
 
-// SCROLL ANIMATIONS
-const obs = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('show'), i * 100);
-      obs.unobserve(e.target);
+// ── SCROLL ANIMATION FOR CARDS ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('show'), i * 100);
+      observer.unobserve(entry.target);
     }
   });
 }, { threshold: 0.08 });
-document.querySelectorAll('.pkg-card').forEach(el => obs.observe(el));
+document.querySelectorAll('.card').forEach(el => observer.observe(el));
 
-// COUNTER ANIMATION
-const cobs = new IntersectionObserver((entries) => {
+// ── COUNTER ANIMATION ──
+const cobs = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       const el = e.target;
-      const target = +el.dataset.target;
-      let count = 0;
-      const inc = Math.ceil(target / 60);
-      const timer = setInterval(() => {
-        count += inc;
-        if (count >= target) { count = target; clearInterval(timer); }
-        el.textContent = count + (target >= 100 ? '+' : '');
-      }, 30);
+      const target = +el.dataset.t;
+      let n = 0;
+      const step = Math.ceil(target / 60);
+      const t = setInterval(() => {
+        n += step;
+        if (n >= target) { n = target; clearInterval(t); }
+        el.textContent = n + (target >= 100 ? '+' : '');
+      }, 28);
       cobs.unobserve(el);
     }
   });
 }, { threshold: 0.5 });
-document.querySelectorAll('.counter-num').forEach(el => cobs.observe(el));
+document.querySelectorAll('.cnt-n').forEach(el => cobs.observe(el));
 
-// GALLERY FILTER
+// ── GALLERY FILTER ──
 function gFilter(btn, cat) {
-  document.querySelectorAll('.g-tab').forEach(b => b.classList.remove('on'));
+  document.querySelectorAll('.gtab').forEach(b => b.classList.remove('on'));
   btn.classList.add('on');
   let first = true;
-  document.querySelectorAll('.g-item').forEach(item => {
+  document.querySelectorAll('.gitem').forEach(item => {
     const show = cat === 'all' || item.dataset.c === cat;
     item.style.display = show ? '' : 'none';
     item.classList.remove('big');
@@ -798,27 +947,60 @@ function gFilter(btn, cat) {
   });
 }
 
-// FEEDBACK
+// ── BOOKING POPUP ──
+function openBooking(name, price, icon) {
+  document.getElementById('popIcon').textContent = icon;
+  document.getElementById('popName').textContent = name;
+  document.getElementById('popPrice').textContent = price + ' per person';
+  document.getElementById('popUserName').value = '';
+  document.getElementById('popPhone').value = '';
+  document.getElementById('bookingBox').classList.add('open');
+}
+function closeBooking() {
+  document.getElementById('bookingBox').classList.remove('open');
+}
+// Close popup when clicking outside
+document.getElementById('bookingBox').addEventListener('click', function(e) {
+  if (e.target === this) closeBooking();
+});
+
+function sendBooking() {
+  const name = document.getElementById('popUserName').value.trim();
+  const phone = document.getElementById('popPhone').value.trim();
+  const trip = document.getElementById('popName').textContent;
+  const price = document.getElementById('popPrice').textContent;
+
+  if (!name) { alert('Please enter your name 😊'); return; }
+
+  let msg = `Hi! I am ${name}. I want to book ${trip} (${price}).`;
+  if (phone) msg += ` My number: ${phone}.`;
+  msg += ' Please confirm the dates.';
+
+  window.open('https://wa.me/917588924408?text=' + encodeURIComponent(msg), '_blank');
+  closeBooking();
+}
+
+// ── FAVOURITE BUTTON ──
+function toggleFav(el) {
+  el.textContent = el.textContent === '🤍' ? '❤️' : '🤍';
+}
+
+// ── FEEDBACK FORM ──
 function submitFb() {
   const n = document.getElementById('fn').value.trim();
   const r = document.getElementById('fr').value.trim();
   if (!n || !r) { alert('Please fill your name and review 😊'); return; }
-  document.getElementById('fb-ok').style.display = 'block';
+  document.getElementById('fbdone').style.display = 'block';
   document.getElementById('fn').value = '';
   document.getElementById('ft').value = '';
   document.getElementById('fr').value = '';
-  document.querySelectorAll('.star-pick input').forEach(i => i.checked = false);
+  document.querySelectorAll('.star-row input').forEach(i => i.checked = false);
 }
 
-// BACK TO TOP
+// ── SCROLL EVENTS ──
 window.addEventListener('scroll', () => {
-  document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
+  document.getElementById('topBtn').classList.toggle('show', window.scrollY > 400);
 });
-
-// WHATSAPP (works on all devices)
-function openWhatsApp(pkg) {
-  window.open('https://wa.me/917588924408?text=' + encodeURIComponent('Hi! I want to book ' + pkg), '_blank');
-}
 </script>
 </body>
 </html>
